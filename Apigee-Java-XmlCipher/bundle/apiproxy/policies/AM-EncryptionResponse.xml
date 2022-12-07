@@ -1,0 +1,11 @@
+<AssignMessage name='AM-EncryptionResponse'>
+  <Set>
+    <Headers>
+      <!-- This variable will be null if the key is NOT generated. A-OK -->
+      <Header name='kek'>{xmlcipher_keybytes_hex}</Header>
+    </Headers>
+    <StatusCode>200</StatusCode>
+    <ReasonPhrase>OK</ReasonPhrase>
+  </Set>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

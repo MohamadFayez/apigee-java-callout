@@ -1,0 +1,19 @@
+<AssignMessage name='AM-92-cascading'>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+
+  <AssignVariable>
+    <Name>assigned</Name>
+    <Template>{timeFormatUTCMs(yyyy.MMMM.dd,system.timestamp)}</Template>
+  </AssignVariable>
+
+  <AssignVariable>
+    <Name>assigned</Name>
+    <Template>{toLowerCase(assigned)}</Template>
+  </AssignVariable>
+
+  <AssignVariable>
+    <Name>casename</Name>
+    <Template>cascading timeFormatUTCMs() and toLowerCase()</Template>
+  </AssignVariable>
+
+</AssignMessage>

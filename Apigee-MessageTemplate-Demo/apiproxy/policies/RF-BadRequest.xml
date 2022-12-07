@@ -1,0 +1,19 @@
+<RaiseFault name='RF-BadRequest'>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <FaultResponse>
+    <Set>
+      <Headers>
+        <Header name='system.uuid'>{system.uuid}</Header>
+      </Headers>
+      <Payload contentType='application/json'>{
+  "error" : {
+    "code" : 400.01,
+    "message" : "Bad request. Pass a query param t with a valid value"
+  }
+}
+</Payload>
+      <StatusCode>400</StatusCode>
+      <ReasonPhrase>Bad Request</ReasonPhrase>
+    </Set>
+  </FaultResponse>
+</RaiseFault>

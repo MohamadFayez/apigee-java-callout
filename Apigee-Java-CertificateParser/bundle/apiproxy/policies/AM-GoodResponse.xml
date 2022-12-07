@@ -1,0 +1,26 @@
+<AssignMessage name='AM-GoodResponse'>
+  <Remove>
+    <Headers/>
+  </Remove>
+  <Set>
+    <Headers>
+      <Header name='apiproxy'>{apiproxy.name} r{apiproxy.revision}</Header>
+    </Headers>
+    <Payload contentType='application/json'>{
+  "message" : "ok",
+  "system.uuid" : "{system.uuid}",
+  "cert" : {
+    "serial" : "{cert_serial}",
+    "notBefore" : "{cert_notBefore}",
+    "notAfter" : "{cert_notAfter}",
+    "issuerDN" : "{cert_issuerDN}",
+    "subjectDN" : "{cert_subjectDN}"
+  },
+  "now" : "{system.time}"
+}
+</Payload>
+    <StatusCode>200</StatusCode>
+    <ReasonPhrase>OK</ReasonPhrase>
+  </Set>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

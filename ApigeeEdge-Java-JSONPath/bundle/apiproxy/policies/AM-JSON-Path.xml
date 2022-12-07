@@ -1,0 +1,10 @@
+<AssignMessage name='AM-JSON-Path'>
+  <AssignVariable>
+    <Name>path1</Name>
+    <Value>$[*].['id','name']</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>output</Name>
+    <Template>{jsonPath(path1,contrivedMessage.content)}</Template>
+  </AssignVariable>
+</AssignMessage>

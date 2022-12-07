@@ -1,0 +1,17 @@
+<AssignMessage name='AM-DynamicResponse'>
+  <Remove>
+    <Headers/>
+  </Remove>
+  <Set>
+    <Payload contentType='application/json'>{
+  "message" : "{rc_reason_phrase}",
+  "system.uuid" : "{system.uuid}",
+  "nano.time" : "{rc_time}",
+  "now" : "{system.time}"
+}
+</Payload>
+    <StatusCode>{rc_status_code}</StatusCode>
+    <ReasonPhrase>{rc_reason_phrase}</ReasonPhrase>
+  </Set>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+</AssignMessage>

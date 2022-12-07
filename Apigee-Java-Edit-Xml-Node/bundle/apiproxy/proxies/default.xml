@@ -1,0 +1,113 @@
+<ProxyEndpoint name='default'>
+  <Description>Proxy for Java callout edit-xml-node</Description>
+  <HTTPProxyConnection>
+    <BasePath>/edit-xml-node</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name="PreFlow">
+      <Request>
+        <Step>
+          <Name>RF-BadHeader</Name>
+          <Condition>request.header.content-type != "text/xml" AND request.header.content-type != "application/xml"</Condition>
+        </Step>
+      </Request>
+      <Response>
+      </Response>
+  </PreFlow>
+
+  <PostFlow name="PostFlow">
+      <Request/>
+      <Response>
+      </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='append-text'>
+      <Description>append text to the first child of the first element of an XML document</Description>
+      <Request>
+        <Step>
+          <Name>RF-MissingQueryParam</Name>
+          <Condition>request.queryparam.nodetype= null OR request.queryparam.texttoinsert= null OR request.queryparam.xpath = null</Condition>
+        </Step>
+      </Request>
+      <Response>
+        <Step><Name>Java-AppendXmlNode</Name></Step>
+        <Step><Name>AM-GoodResponse</Name></Step>
+      </Response>
+      <Condition>(proxy.pathsuffix ~ "/t1-append-node") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='replace-text'>
+      <Description>replace the text of an element</Description>
+      <Request>
+        <Step>
+          <Name>RF-MissingQueryParam</Name>
+          <Condition>request.queryparam.nodetype= null OR request.queryparam.texttoinsert= null OR request.queryparam.xpath = null</Condition>
+        </Step>
+      </Request>
+      <Response>
+        <Step><Name>Java-ReplaceXmlNode</Name></Step>
+        <Step><Name>AM-GoodResponse</Name></Step>
+      </Response>
+      <Condition>(proxy.pathsuffix ~ "/t2-replace-xml-node") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='remove node'>
+      <Description>remove an element</Description>
+      <Request>
+        <Step>
+          <Name>RF-MissingQueryParam</Name>
+          <Condition>request.queryparam.xpath = null</Condition>
+        </Step>
+      </Request>
+      <Response>
+        <Step><Name>Java-RemoveXmlNode</Name></Step>
+        <Step><Name>AM-GoodResponse</Name></Step>
+      </Response>
+      <Condition>(proxy.pathsuffix ~ "/t3-remove-xml-node") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='remove soap header'>
+      <Description>remove a SOAP header element</Description>
+      <Request/>
+      <Response>
+        <Step><Name>Java-RemoveSoapHeader</Name></Step>
+        <Step><Name>AM-GoodResponse</Name></Step>
+      </Response>
+      <Condition>(proxy.pathsuffix ~ "/t4-remove-soap-header") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='insert soap header'>
+      <Description>insert a SOAP header element</Description>
+      <Request/>
+      <Response>
+        <Step><Name>AM-Settings</Name></Step>
+        <Step><Name>Java-InsertSoapHeader</Name></Step>
+        <Step><Name>AM-GoodResponse</Name></Step>
+      </Response>
+      <Condition>(proxy.pathsuffix ~ "/t5-insert-soap-header") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='unknown'>
+      <!--
+           applies as a "default" flow, in case none of the conditions
+           for the above flows evaluated to true.
+      -->
+      <Description>Unknown request</Description>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='LoopbackRoute'>
+    <!-- no target! no backend call -->
+  </RouteRule>
+
+</ProxyEndpoint>

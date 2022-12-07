@@ -1,0 +1,14 @@
+<JavaCallout name="Java-GenerateJWS-No-Encode">
+  <Properties>
+    <Property name='algorithm'>RS256</Property>
+    <Property name='debug'>true</Property>
+    <Property name='payload'>{demo-payload-2}</Property>
+    <Property name='b64'>false</Property>
+    <Property name='private-key'>{private.my_private_key}</Property>
+    <Property name='key-id'>key1</Property>
+    <Property name='additional-headers'>{ "iat": {epoch-seconds} }</Property>
+    <Property name='output'>output</Property>
+  </Properties>
+  <ClassName>com.google.apigee.callouts.GenerateJws</ClassName>
+  <ResourceURL>java://apigee-callout-jws-20220630.jar</ResourceURL>
+</JavaCallout>

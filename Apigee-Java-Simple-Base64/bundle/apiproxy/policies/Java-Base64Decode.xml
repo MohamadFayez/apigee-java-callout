@@ -1,0 +1,8 @@
+<JavaCallout name='Java-Base64Decode'>
+  <Properties>
+    <Property name='action'>decode</Property>
+    <Property name='encoding'>{base64_desired_encoding}</Property>
+  </Properties>
+  <ClassName>com.google.apigee.callouts.Base64Callout</ClassName>
+  <ResourceURL>java://apigee-custom-base64-20210409.jar</ResourceURL>
+</JavaCallout>

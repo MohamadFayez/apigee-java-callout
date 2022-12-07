@@ -1,0 +1,10 @@
+<JavaCallout name='Java-XSD-1'>
+  <Properties>
+     <Property name='schema'>{myxsd}</Property>
+     <Property name='source'>request</Property>
+     <Property name='required-root'>purchaseOrder</Property>
+     <Property name='required-root-namespace'>http://tempuri.org/po.xsd</Property>
+  </Properties>
+  <ClassName>com.google.apigee.callouts.xsdvalidation.XsdValidatorCallout</ClassName>
+  <ResourceURL>java://apigee-custom-xsd-validation-20211021.jar</ResourceURL>
+</JavaCallout>

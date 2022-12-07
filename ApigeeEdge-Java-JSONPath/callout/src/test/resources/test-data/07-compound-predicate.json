@@ -1,0 +1,32 @@
+{
+  "source" : {
+    "quota": [
+      {
+        "appname": "A",
+        "operation": "ManageOrder",
+        "value": "900"
+      },
+      {
+        "appname": "B",
+        "operation": "ManageOrder",
+        "value": "1000"
+      },
+      {
+        "appname": "B",
+        "operation": "SubmitOrder",
+        "value": "800"
+      }
+    ]
+  },
+  "context" : {
+  },
+  "properties" : {
+    "debug" : "true",
+    "jsonpath" : "$.quota[?(@.appname=='A' && @.operation=='ManageOrder')].appname"
+  },
+  "expected" : {
+    "success" : "true",
+    "error" : null,
+    "output" : ["A"]
+  }
+}

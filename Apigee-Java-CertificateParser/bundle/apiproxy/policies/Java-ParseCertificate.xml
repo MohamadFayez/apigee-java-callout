@@ -1,0 +1,39 @@
+<JavaCallout name='Java-ParseCertificate'>
+  <Properties>
+    <Property name="certificate">
+    -----BEGIN CERTIFICATE-----
+    MIIFZDCCBEygAwIBAgISBGXZVXtrpBzVlq9v5duzrzybMA0GCSqGSIb3DQEBCwUA
+    MEoxCzAJBgNVBAYTAlVTMRYwFAYDVQQKEw1MZXQncyBFbmNyeXB0MSMwIQYDVQQD
+    ExpMZXQncyBFbmNyeXB0IEF1dGhvcml0eSBYMzAeFw0yMDEwMTQxMzQ4MzFaFw0y
+    MTAxMTIxMzQ4MzFaMCAxHjAcBgNVBAMTFTVnLWRldi5kaW5vY2hpZXNhLm5ldDCC
+    ASIwDQYJKoZIhvcNAQEBBQADggEPADCCAQoCggEBAK13u2zVmJHN/kOr81Rki8Kp
+    4dXZb6tkZtUDsdJNh3rTl8MO2PUhApqzj+HV+omfh3LxlbTYEJL92OFaWxb0A5da
+    pP34aUeenDFvvlg6TVQ2+YR9KtnP/DM4m3/tuDeYj2TqAit+kN4rIT8vfqBdJU1L
+    Ns3Q+orpfzfkVcIV2wUbrXkgrwHVz3wjCHVAxZPW9SxecXtLAs4sTKLVZEjHjmvT
+    zDrbvvU2l/g426l1O3nrwvhbw5T2Y6VfO0stdNUbQO5ZPx5CPdU9Qm3U3fgwt1h3
+    Rd3DuTbPdkdsXeJcwFg+kDwEmQwaZmn8ERbJ/1I/i96o49h2GJdyvPV2a7Hr0p0C
+    AwEAAaOCAmwwggJoMA4GA1UdDwEB/wQEAwIFoDAdBgNVHSUEFjAUBggrBgEFBQcD
+    AQYIKwYBBQUHAwIwDAYDVR0TAQH/BAIwADAdBgNVHQ4EFgQU2/pIusXPsPvB5axm
+    d1LgyJl+8rUwHwYDVR0jBBgwFoAUqEpqYwR93brm0Tm3pkVl7/Oo7KEwbwYIKwYB
+    BQUHAQEEYzBhMC4GCCsGAQUFBzABhiJodHRwOi8vb2NzcC5pbnQteDMubGV0c2Vu
+    Y3J5cHQub3JnMC8GCCsGAQUFBzAChiNodHRwOi8vY2VydC5pbnQteDMubGV0c2Vu
+    Y3J5cHQub3JnLzAgBgNVHREEGTAXghU1Zy1kZXYuZGlub2NoaWVzYS5uZXQwTAYD
+    VR0gBEUwQzAIBgZngQwBAgEwNwYLKwYBBAGC3xMBAQEwKDAmBggrBgEFBQcCARYa
+    aHR0cDovL2Nwcy5sZXRzZW5jcnlwdC5vcmcwggEGBgorBgEEAdZ5AgQCBIH3BIH0
+    APIAdwD2XJQv0XcwIhRUGAgwlFaO400TGTO/3wwvIAvMTvFk4wAAAXUnlYaTAAAE
+    AwBIMEYCIQDN3nxymjt6afzNd0kYpgIKpglrHnRjapNO/gtfSo/Y/AIhAPwhWx4a
+    /CtVhJWyzQRAQJ1KNhPH2VAflKwcpBv9jRfnAHcAb1N2rDHwMRnYmQCkURX/dxUc
+    EdkCwQApBo2yCJo32RMAAAF1J5WGugAABAMASDBGAiEAuksDHIhdvODHALXielDN
+    QVzyYM6K0c3K7eOZnGe4gsQCIQCQ/fq7yF5ScOm0rRNv2VWRcsn+l24bzjkrbdft
+    tiY8UTANBgkqhkiG9w0BAQsFAAOCAQEAZANMxcHo6RShEKZtpG1nPj5tDw4Us0Wl
+    Jk5QWhf3ZeHg/TP5JNmlyjjjaf7wpuPlDgqIU+NRGEidriCMdHWZVXZaDMAAQAKM
+    mqPY27poUt7o0ormIUtxy46qDMcFi/mCfGD8FmCE7IsJrhZeBbsI6ZZUuwNmwNr2
+    qx/ygzOUBW/YLYEeklsDx7vuMcwiZ+/f3Idop3/2LGIcV0GHjgi54ft+VDBIKMYU
+    7dtl6qKQy5JNf1xodMYCeN5YmHAKTXwpqYsVRx+bE69Q/e3W5xW/x+XNaZxW9Xgv
+    Yf3d7i2Mxl1PtLvm8pro2Bc7omEqOo2YZ/FRO6geVJk5hP1ixFI8NQ==
+    -----END CERTIFICATE-----
+    </Property>
+    </Properties>
+    <ClassName>com.google.apigee.callout.CertificateParseCallout</ClassName>
+  <ResourceURL>java://apigee-custom-certificate-parser-20201203.jar</ResourceURL>
+</JavaCallout>

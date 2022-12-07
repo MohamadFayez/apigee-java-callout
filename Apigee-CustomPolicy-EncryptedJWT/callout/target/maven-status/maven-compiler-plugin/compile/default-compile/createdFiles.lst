@@ -1,0 +1,15 @@
+com\google\apigee\callouts\GenerateBase$PolicyConfig.class
+com\google\apigee\encoding\Base16.class
+com\google\apigee\util\TimeResolver.class
+com\google\apigee\callouts\VerifyBase$PolicyConfig.class
+com\google\apigee\util\CalloutUtil.class
+com\google\apigee\callouts\GenerateBase$2.class
+com\google\apigee\callouts\GenerateJwe.class
+com\google\apigee\callouts\GenerateBase$1.class
+com\google\apigee\callouts\VerifyEncryptedJwt.class
+com\google\apigee\callouts\VerifyJwe.class
+com\google\apigee\callouts\VerifyBase.class
+com\google\apigee\callouts\GenerateBase.class
+com\google\apigee\callouts\GenerateEncryptedJwt.class
+com\google\apigee\util\KeyUtil.class
+com\google\apigee\callouts\EncryptedJoseBase.class

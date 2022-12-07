@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="apigee-callout-encrypted-jwt" />
+        <module name="apigee-callout-rsa-crypto" />
+        <module name="edge-callout-trust" />
+        <module name="apigee-bcrypt-password-check" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="apigee-bcrypt-password-check" options="-Xlint:unchecked,deprecation" />
+      <module name="apigee-callout-encrypted-jwt" options="-Xlint:unchecked,deprecation" />
+      <module name="apigee-callout-rsa-crypto" options="-Xlint:unchecked,deprecation" />
+      <module name="edge-callout-trust" options="" />
+    </option>
+  </component>
+</project>

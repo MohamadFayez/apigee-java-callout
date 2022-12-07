@@ -1,0 +1,8 @@
+<JavaCallout name='Java-BcryptCheck'>
+  <Properties>
+    <Property name='hash'>{bcrypt_hash}</Property>
+    <Property name='password'>{plaintext_password}</Property>
+  </Properties>
+  <ClassName>com.google.apigee.callouts.BcryptCheck</ClassName>
+  <ResourceURL>java://apigee-bcrypt-password-check-20220104.jar</ResourceURL>
+</JavaCallout>

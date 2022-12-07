@@ -1,0 +1,36 @@
+{
+  "source" : [
+  {
+    "id": "1",
+    "name": "Abhi",
+    "pan": "ABC",
+    "bg": "O+"
+  },
+  {
+    "id": "2",
+    "name": "Ashish",
+    "pan": "XYZ",
+    "bg": "AB+"
+  }
+],
+  "context" : {
+  },
+  "properties" : {
+    "debug" : "true",
+    "jsonpath" : "$[*].['id','name']"
+  },
+  "expected" : {
+    "success" : "true",
+    "error" : null,
+    "output" :  [
+      {
+        "id":"1",
+        "name":"Abhi"
+      },
+      {
+        "id":"2",
+        "name":"Ashish"
+      }
+    ]
+  }
+}

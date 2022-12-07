@@ -1,0 +1,11 @@
+<JavaCallout name='Java-AppendXmlNode'>
+  <Properties>
+    <Property name='source'>request.content</Property>
+    <Property name='new-node-type'>{request.queryparam.nodetype}</Property>
+    <Property name='new-node-text'>{request.queryparam.texttoinsert}</Property>
+    <Property name='xpath'>{request.queryparam.xpath}</Property>
+    <Property name='action'>append</Property>
+  </Properties>
+  <ClassName>com.google.apigee.callouts.EditXmlNode</ClassName>
+  <ResourceURL>java://apigee-custom-edit-xml-node-20220104.jar</ResourceURL>
+</JavaCallout>

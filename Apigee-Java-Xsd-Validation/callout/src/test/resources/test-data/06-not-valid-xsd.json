@@ -1,0 +1,15 @@
+{
+  "context" : {
+    "inputVar" : "file://purchase-order.xml",
+    "myxsd" : "file://ReOrderNodes.xsl"
+  },
+  "properties" : {
+    "debug" : true,
+    "source" : "inputVar",
+    "schema" : "{myxsd}"
+  },
+  "expected" : {
+    "success" : false,
+    "error" : "The namespace of element 'stylesheet' must be from the schema namespace, 'http://www.w3.org/2001/XMLSchema'."
+  }
+}

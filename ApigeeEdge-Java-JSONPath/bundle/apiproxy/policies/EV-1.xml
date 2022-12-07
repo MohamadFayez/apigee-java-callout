@@ -1,0 +1,9 @@
+<ExtractVariables name='EV-1'>
+  <Source>contrivedMessage</Source>
+  <VariablePrefix>extracted.</VariablePrefix>
+  <JSONPayload>
+    <Variable name='extracted'>
+      <JSONPath>$[*].id</JSONPath>
+    </Variable>
+  </JSONPayload>
+</ExtractVariables>

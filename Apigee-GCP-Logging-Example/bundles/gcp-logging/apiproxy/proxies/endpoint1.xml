@@ -1,0 +1,152 @@
+<ProxyEndpoint name='endpoint1'>
+  <Description>Show how to call into GCP Logging</Description>
+  <HTTPProxyConnection>
+    <BasePath>/gcp-logging</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+  <DefaultFaultRule name="default-fault-rule">
+    <Step>
+      <Name>AM-Inject-Proxy-Revision-Header</Name>
+    </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
+  </DefaultFaultRule>
+
+  <PreFlow name='PreFlow'>
+    <Request/>
+    <Response>
+      <Step>
+        <Name>AM-Clean-Request-Headers-From-Response</Name>
+      </Step>
+      <Step>
+        <Name>AM-Inject-Proxy-Revision-Header</Name>
+      </Step>
+    </Response>
+  </PreFlow>
+
+  <PostFlow name='PostFlow'>
+    <Request/>
+    <Response>
+      <!--
+          This sequence is for logging to GCP Logging (previously known as
+          "Stackdriver").  It's all done in the Response flow. Ideally it would
+          be PostClientFlow, invoked via a FlowHook. But at this time there is
+          no FlowHook for PostClientFlow.
+
+          GCP Logging exposes a REST API for writing log messages. Invoking it requires
+          a bearer (access) token.
+
+          Acquiring the token for GCP Logging involves an RFC7523 flow, in which
+          the client generates a JWT signed with his own private key, sends the JWT to
+          the OAuth service, and obtains an opaque access token in response. This access
+          token has an expiry of 1 hour. There are some stipulations for this JWT - its
+          expiry, its claims (scope, issuer), and the signer and algorithm. The Google
+          OAuth service will reject the request for a new token if any of these
+          requirements is not met.
+
+          The sequence here does these things:
+          - check the cache for a token.
+          - If not present, get a new one. And cache it.
+          - using the existing or new token, invoke GCP Logging to write a log message.
+
+      -->
+      <Step>
+        <Name>KVM-Get-SAKey-JSON</Name>
+      </Step>
+      <Step>
+        <Name>JS-Shred-SAKey-JSON</Name>
+      </Step>
+      <Step>
+        <!-- see if there is a viable token in cache -->
+        <Name>Cache-Get-GCP-Logging-Token</Name>
+      </Step>
+      <Step>
+        <!-- no token? generate a JWT to send to the Google OAuth service -->
+        <Name>JWT-Generate-GCP-Logging-token</Name>
+        <Condition>gcplogging.token = null</Condition>
+      </Step>
+      <Step>
+        <!-- no token? send the request to the Google OAuth service -->
+        <Name>SC-Obtain-GCP-Logging-AccessToken</Name>
+        <Condition>gcplogging.token = null</Condition>
+      </Step>
+      <Step>
+        <!-- no token? extract the new token and expiry from the response from the Google OAuth service -->
+        <Name>Extract-GCP-Logging-AccessToken</Name>
+        <Condition>gcplogging.token = null</Condition>
+      </Step>
+      <Step>
+        <!-- no token? adjust the expiry downward to be conservative with cache TTL -->
+        <Name>JS-Adjust-Expiry</Name>
+        <Condition>gcplogging.token = null</Condition>
+      </Step>
+      <Step>
+        <!-- no token? check for failure (no new token) -->
+        <Name>RF-No-AccessToken</Name>
+        <Condition>(gcplogging.token = null) and (gcplogging.newtoken = null)</Condition>
+      </Step>
+      <Step>
+        <!-- new token? insert it into cache -->
+        <Name>Cache-Put-GCP-Logging-Token</Name>
+        <Condition>(gcplogging.token = null) and (gcplogging.newtoken != null)</Condition>
+      </Step>
+      <Step>
+        <!-- new token? copy it to the context variable we want -->
+        <Name>AM-Set-GCP-Logging-Token</Name>
+        <Condition>gcplogging.token = null</Condition>
+      </Step>
+      <!-- set the project id and the log ID -->
+      <Step>
+        <Name>AM-Set-GCP-Logging-Settings</Name>
+      </Step>
+      <Step>
+        <!-- finally, invoke the Logging API using a JS Callout -->
+        <Name>JS-Log-To-GCP-Logging</Name>
+        <Condition>request.header.usesc = null</Condition>
+      </Step>
+      <Step>
+        <!-- or conditionally, invoke the logging API  via ServiceCallout -->
+        <Name>SC-Log-To-GCP-Logging</Name>
+        <Condition>request.header.usesc != null</Condition>
+      </Step>
+    </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='test 1'>
+      <!--
+        curl -i $endpoint/gcp-logging/t1 \
+          -H content-type:application/json \
+          -d '{ "payload" : "YOUR MESSAGE GOES HERE" }'
+      -->
+      <Request>
+        <Step>
+          <Name>RF-InvalidContentType</Name>
+          <Condition>NOT (request.header.content-type =| "application/json")</Condition>
+        </Step>
+        <Step>
+          <Name>Extract-LogPayload</Name>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Success</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t1") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='NoRouteRule'/>
+
+</ProxyEndpoint>

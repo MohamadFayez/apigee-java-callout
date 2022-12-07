@@ -1,0 +1,102 @@
+<ProxyEndpoint name="endpoint1">
+  <Description>Default Proxy</Description>
+
+  <HTTPProxyConnection>
+    <BasePath>/jws</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+
+  <DefaultFaultRule name="default-fault-rule">
+    <Step>
+      <Name>AM-Inject-Proxy-Revision-Header</Name>
+    </Step>
+    <AlwaysEnforce>true</AlwaysEnforce>
+  </DefaultFaultRule>
+
+  <PreFlow>
+    <Request>
+        <Step>
+          <Name>AM-Demo-Variables</Name>
+        </Step>
+    </Request>
+    <Response>
+        <Step>
+          <Name>AM-Clean-Headers</Name>
+        </Step>
+        <Step>
+          <Name>AM-Inject-Proxy-Revision-Header</Name>
+        </Step>
+    </Response>
+  </PreFlow>
+
+  <Flows>
+
+    <Flow name="generate 1">
+      <Description>generate a JWS</Description>
+      <Request>
+        <Step>
+          <Name>Java-GenerateJWS</Name>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Success-Generate-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/generate_jws") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name="generate 2">
+      <Description>generate a JWS with un-encoded payload</Description>
+      <Request>
+        <Step>
+          <Name>Java-GenerateJWS-No-Encode</Name>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Success-Generate-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/generate_jws_no_encode") and (request.verb = "POST")</Condition>
+    </Flow>
+
+    <Flow name="private_key">
+      <Description>retrieve the private key (for demo purposes only)</Description>
+      <Request>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-PrivateKey-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/private_key") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name="public_key">
+      <Description>retrieve the public key</Description>
+      <Request>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-PublicKey-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/public_key") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='unknown'>
+      <Description>unknown request</Description>
+      <Request>
+        <Step>
+          <Name>RF-Unknown-Request</Name>
+        </Step>
+      </Request>
+    </Flow>
+  </Flows>
+
+  <RouteRule name="Loopback"/>
+
+</ProxyEndpoint>

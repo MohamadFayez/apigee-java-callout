@@ -1,0 +1,15 @@
+<JavaCallout name='JC-AWSSignV4-Contrived-3'>
+    <Properties>
+        <Property name="service">{aws-service}</Property>
+        <Property name="endpoint">https://{endpoint-host}</Property>
+        <Property name="region">{aws-region}</Property>
+        <Property name="key">{private.access-key-id}</Property>
+        <Property name="secret">{private.secret-access-key}</Property>
+        <Property name="source">outgoingAwsMessage</Property>
+        <Property name="sign-content-sha256">true</Property>
+        <Property name="insure-trailing-slash">true</Property>
+        <Property name="debug">true</Property>
+    </Properties>
+    <ClassName>com.google.apigee.callouts.AWSV4Signature</ClassName>
+    <ResourceURL>java://apigee-callout-awsv4sig-20210609.jar</ResourceURL>
+</JavaCallout>

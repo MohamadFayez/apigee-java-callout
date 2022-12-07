@@ -1,0 +1,52 @@
+<ProxyEndpoint name='endpoint1'>
+  <Description>Demonstration Proxy for Java callout weighted-selector</Description>
+  <HTTPProxyConnection>
+    <BasePath>/weighted-selector</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name="PreFlow">
+      <Request/>
+      <Response>
+      </Response>
+  </PreFlow>
+
+  <PostFlow name="PostFlow">
+      <Request/>
+      <Response>
+      </Response>
+  </PostFlow>
+
+  <Flows>
+    <Flow name='test1'>
+      <Description>get weighted selection and return a response</Description>
+      <Request/>
+      <Response>
+        <Step><Name>Java-WeightedSelector</Name></Step>
+        <Step><Name>AssignMessage-GoodResponse</Name></Step>
+      </Response>
+      <Condition>(proxy.pathsuffix ~ "/t1") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='unknown'>
+      <!--
+           applies as a "default" flow, in case none of the conditions
+           for the above flows evaluated to true.
+      -->
+      <Description>Unknown request</Description>
+      <Request>
+        <Step><Name>RaiseFault-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='LoopbackRoute'>
+    <!-- no target! no backend call -->
+  </RouteRule>
+
+</ProxyEndpoint>

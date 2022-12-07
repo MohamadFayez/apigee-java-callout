@@ -1,0 +1,17 @@
+<AssignMessage name='AM-Response'>
+  <Set>
+    <Payload contentType='application/json'>{
+  "status" : "ok",
+  "resource" : "{sign_resource}",
+  "signature" : "{sign_signature}",
+  "expiration" : {
+    "seconds" : {sign_expiration},
+    "relative" : {sign_duration},
+    "ISO" : "{sign_expiration_ISO}"
+  },
+  "signedurl" : "{sign_signedurl}"
+}</Payload>
+  </Set>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignTo createNew='false' transport='http' type='response'/>
+</AssignMessage>

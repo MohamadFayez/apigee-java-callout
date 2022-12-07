@@ -1,0 +1,13 @@
+<JavaCallout name="Java-GenerateJWS">
+  <Properties>
+    <Property name='algorithm'>RS256</Property>
+    <Property name='debug'>true</Property>
+    <Property name='payload'>{demo-payload-1}</Property>
+    <Property name='private-key'>{private.my_private_key}</Property>
+    <Property name='key-id'>key1</Property>
+    <Property name='additional-headers'>{ "iat": {system.timestamp} }</Property>
+    <Property name='output'>output</Property>
+  </Properties>
+  <ClassName>com.google.apigee.callouts.GenerateJws</ClassName>
+  <ResourceURL>java://apigee-callout-jws-20220630.jar</ResourceURL>
+</JavaCallout>

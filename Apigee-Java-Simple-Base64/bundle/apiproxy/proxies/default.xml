@@ -1,0 +1,106 @@
+<ProxyEndpoint name='default'>
+  <Description>Proxy for Java callout Base64</Description>
+  <HTTPProxyConnection>
+    <BasePath>/base64-encoder</BasePath>
+    <Properties/>
+    <!-- <VirtualHost>default</VirtualHost> -->
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name='PreFlow'>
+    <Request/>
+    <Response/>
+  </PreFlow>
+  <PostFlow name='PostFlow'>
+    <Request/>
+    <Response>
+      <Step><Name>AM-CleanResponseHeaders</Name></Step>
+    </Response>
+  </PostFlow>
+  <PostClientFlow name='PostFlow'>
+    <Request/>
+    <Response>
+    </Response>
+  </PostClientFlow>
+
+  <Flows>
+    <Flow name='test 1'>
+      <Description>Retrieve an Image and encode it in base64</Description>
+      <!--
+          Example invocation:
+
+curl -i -X GET -H accept-encoding:base64 \
+https://${ORG}-${ENV}.apigee.net/base64-encoder/t1
+
+      -->
+      <Request>
+        <Step><Name>AM-RetainEncodingOption</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>Java-Base64Encode</Name>
+          <Condition>request.header.accept-encoding ~~ "^(?i)(Base64)$"</Condition>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t1") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name='test 2'>
+      <Description>Loopback: Encode or Decode the posted data in base64</Description>
+      <!--
+          Example invocation for encode:
+
+curl -i -X POST \
+-H content-type:application/octet-stream \
+-data-binary @/Users/someone/Downloads/Logs_512px.png  \
+https://${ORG}-${ENV}.apigee.net/base64-encoder/t2?action=encode
+
+Example invocation for decode:
+
+curl -i -X POST \
+-H content-type:application/octet-stream \
+-data-binary @/Users/someone/Downloads/Logs_512px.png.b64  \
+https://${ORG}-${ENV}.apigee.net/base64-encoder/t2?action=decode
+
+      -->
+      <Request>
+        <Step><Name>AM-RetainEncodingOption</Name></Step>
+        <Step>
+          <Name>RF-InvalidAction</Name>
+          <Condition>NOT (request.queryparam.action ~~ "^(?i)(encode|decode)$")</Condition>
+        </Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>Java-Base64Encode</Name>
+          <Condition>request.queryparam.action ~~ "^(?i)(encode)$"</Condition>
+        </Step>
+        <Step>
+          <Name>Java-Base64Decode</Name>
+          <Condition>request.queryparam.action ~~ "^(?i)(decode)$"</Condition>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t2") and (request.verb = "POST")</Condition>
+    </Flow>
+
+
+    <Flow name='unknown request'>
+      <Request>
+        <Step><Name>RF-UnknownRequest</Name></Step>
+      </Request>
+      <Response/>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name='LoopbackRouteRule'>
+    <Condition>(proxy.pathsuffix MatchesPath "/t2") and (request.verb = "POST")</Condition>
+  </RouteRule>
+
+  <RouteRule name='InvokeRouteRule'>
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+
+</ProxyEndpoint>

@@ -1,0 +1,113 @@
+<ProxyEndpoint name="endpoint1">
+  <Description>Proxy Endpoint 1</Description>
+  <HTTPProxyConnection>
+    <BasePath>/jsonpath</BasePath>
+    <Properties/>
+    <VirtualHost>secure</VirtualHost>
+  </HTTPProxyConnection>
+
+  <FaultRules/>
+
+  <PreFlow name="PreFlow">
+    <Request>
+    </Request>
+    <Response>
+      <Step>
+        <Name>AM-CleanResponseHeaders</Name>
+      </Step>
+    </Response>
+  </PreFlow>
+  <PostFlow name="PostFlow">
+    <Request>
+    </Request>
+    <Response>
+    </Response>
+  </PostFlow>
+  <PostClientFlow name="PostFlow">
+    <Request>
+    </Request>
+    <Response>
+    </Response>
+  </PostClientFlow>
+
+  <Flows>
+
+    <Flow name="flow1">
+      <Request>
+        <Step>
+          <Name>AM-ContrivedMessage</Name>
+        </Step>
+        <!-- extract one field; this works -->
+        <Step><Name>EV-1</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t1") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name="flow2">
+      <Request>
+        <Step>
+          <Name>AM-ContrivedMessage</Name>
+        </Step>
+        <!-- extract two fields; this does not work -->
+        <Step><Name>EV-2</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t2") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name="flow3">
+      <Request>
+        <Step>
+          <Name>AM-ContrivedMessage</Name>
+        </Step>
+        <!-- extract two fields via AssignMessage; this also does not work -->
+        <Step><Name>AM-JSON-Path</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t3") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name="flow4">
+      <Request>
+        <Step>
+          <Name>AM-ContrivedMessage</Name>
+        </Step>
+        <!-- extract two fields via callout; this works -->
+        <Step><Name>Java-JSON-Path-Multiple-Fields</Name></Step>
+      </Request>
+      <Response>
+        <Step>
+          <Name>AM-Response</Name>
+        </Step>
+      </Response>
+      <Condition>(proxy.pathsuffix MatchesPath "/t4") and (request.verb = "GET")</Condition>
+    </Flow>
+
+    <Flow name="unknown request">
+      <Request>
+        <Step>
+          <Name>RF-UnknownRequest</Name>
+        </Step>
+      </Request>
+      <Response>
+      </Response>
+    </Flow>
+
+  </Flows>
+
+  <RouteRule name="NoRouteRule"/>
+
+</ProxyEndpoint>

@@ -1,0 +1,14 @@
+{
+  "context" : {
+    "inputVar" : "file://purchase-order.xml",
+    "myxsd" : ""
+  },
+  "properties" : {
+    "source" : "inputVar",
+    "debug" : false
+  },
+  "expected" : {
+    "success" : false,
+    "error" : "configuration error: no xsd property"
+  }
+}

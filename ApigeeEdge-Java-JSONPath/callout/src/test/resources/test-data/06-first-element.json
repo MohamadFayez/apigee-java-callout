@@ -1,0 +1,34 @@
+{
+  "source" : {
+    "quota": [
+      {
+        "appname": "A",
+        "operation": "ManageOrder",
+        "value": "900"
+      },
+      {
+        "appname": "B",
+        "operation": "ManageOrder",
+        "value": "1000"
+      },
+      {
+        "appname": "B",
+        "operation": "SubmitOrder",
+        "value": "800"
+      }
+    ]
+  },
+  "context" : {
+    "notes" : "https://github.com/json-path/JsonPath/issues/272",
+    "notes2" : "instead, use the return-first-element property on this callout"
+  },
+  "properties" : {
+    "debug" : "true",
+    "jsonpath" : "$.quota[?(@.operation=='ManageOrder')][0]"
+  },
+  "expected" : {
+    "success" : "true",
+    "error" : null,
+    "output" : []
+  }
+}

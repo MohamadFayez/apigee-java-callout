@@ -1,0 +1,5 @@
+<AssignMessage name='AM-Clean-Headers'>
+  <Remove>
+    <Headers/>
+  </Remove>
+</AssignMessage>
